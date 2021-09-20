@@ -3,21 +3,24 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 10:27:31
- * @LastEditTime: 2021-09-14 13:44:09
+ * @LastEditTime: 2021-09-20 17:12:24
  * @LastEditors: 安知鱼
  */
 import { Module } from 'vuex'
+import { ElMessage } from 'element-plus'
 
 import Cache from '@/utils/cache'
 import router from '@/router'
 
 import {
   accountLoginRequest,
+  phoneLoginRequest,
+  getPhoneCodeRequest,
   requestUserInfoById,
   requestUserMenusById
 } from '@/service/login/login'
 
-import { IAccount } from '@/service/login/type'
+import { IAccount, IPhone, IRegister } from '@/service/login/type'
 import { ILoginState } from './type'
 import { IRootStore } from '../type'
 import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
@@ -29,7 +32,8 @@ const loginModule: Module<ILoginState, IRootStore> = {
       token: '',
       userInfo: {},
       userMenus: [],
-      permissions: []
+      permissions: [],
+      code: ''
     }
   },
   getters: {},
@@ -42,17 +46,16 @@ const loginModule: Module<ILoginState, IRootStore> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-      // userMenes => route
       const routes = mapMenusToRoutes(userMenus)
-
-      // 将routes => router.main.chilrden
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
-
       // 获取用户按钮权限
       const permissions = mapMenusToPermissions(userMenus)
       state.permissions = permissions
+    },
+    changeCode(state, code: string) {
+      state.code = code
     }
   },
   actions: {
@@ -81,6 +84,56 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 5.跳转首页
       router.push('/main')
     },
+    async getPhoneCode({ commit }, payload: string) {
+      const loginResult = await getPhoneCodeRequest(payload)
+      if (loginResult.code === 200) {
+        const { code } = loginResult.data
+        commit('changeCode', code)
+      } else {
+        ElMessage.error('获取验证码失败!')
+      }
+    },
+    async phoneLoginAction({ commit, dispatch }, payload: IPhone) {
+      // 1. 实现手机登录逻辑
+      const loginResult = await phoneLoginRequest(payload)
+      if (loginResult.code === 200) {
+        const { id, token } = loginResult.data
+        commit('changeToken', token)
+        Cache.setCache('token', token)
+
+        // 2. 发送初始化的请求
+        dispatch('getInitialDataAction', null, { root: true })
+
+        // 3.请求用户信息
+        const userInfoResult = await requestUserInfoById(id)
+        const userInfo = userInfoResult.data
+        commit('changeUserInfo', userInfo)
+        Cache.setCache('userInfo', userInfo)
+
+        // 4.请求用户菜单
+        const userMenusResult = await requestUserMenusById(userInfo.role.id)
+        const userMenus = userMenusResult.data
+        commit('changeUserMenus', userMenus)
+        Cache.setCache('userMenus', userMenus)
+
+        // 5.跳转首页
+        router.push('/main')
+      } else {
+        ElMessage.error('登录失败!')
+      }
+    },
+    async registerAction(context, payload: IRegister) {
+      // 1. 实现注册逻辑
+      const registerResult = await phoneLoginRequest(payload)
+
+      if (registerResult.code === 200) {
+        ElMessage.success('注册成功！')
+        // 2. 跳转登录页
+        router.push('/login')
+      } else {
+        ElMessage.error('注册失败!')
+      }
+    },
     loadLocalLogin({ commit, dispatch }) {
       const token = Cache.getCache('token')
       if (token) {
@@ -94,13 +147,8 @@ const loginModule: Module<ILoginState, IRootStore> = {
       const userMenus = Cache.getCache('userMenus')
       if (userMenus) {
         commit('changeUserMenus', userMenus)
-        // console.log(userMenus);
       }
     }
-    // phoneLoginAction({ commit }, payload: IAccount) {
-    //   // 1. 实现登录逻辑
-    //   const loginResult = await accountLoginRequest(payload);
-    // },
   }
 }
 

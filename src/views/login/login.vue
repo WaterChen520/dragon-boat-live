@@ -4,24 +4,39 @@
       <login-header></login-header>
     </div>
 
-    <div class="panel">
-      <login-panel />
+    <div class="container" v-if="login">
+      <login-container @ForgetClick="ForgetClick" />
+    </div>
+
+    <div class="forget-password" v-else>
+      <login-forget></login-forget>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import LoginPanel from './components/login-panel.vue'
+import { defineComponent, ref } from 'vue'
+import LoginContainer from './components/login-container.vue'
 import LoginHeader from './components/login-heard.vue'
+import LoginForget from './components/login-forget'
 
 export default defineComponent({
   components: {
-    LoginPanel,
-    LoginHeader
+    LoginContainer,
+    LoginHeader,
+    LoginForget
   },
   setup() {
-    return {}
+    const login = ref(true)
+
+    const ForgetClick = () => {
+      login.value = !login.value
+    }
+
+    return {
+      ForgetClick,
+      login
+    }
   }
 })
 </script>
@@ -34,10 +49,10 @@ export default defineComponent({
   background-size: cover;
   width: 100%;
   height: 100%;
-  .panel {
+  .container {
     position: absolute;
     right: 14%;
-    top: 28%;
+    top: 26%;
   }
 }
 </style>

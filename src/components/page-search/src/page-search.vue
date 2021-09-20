@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-06 16:59:13
- * @LastEditTime: 2021-09-13 14:43:41
+ * @LastEditTime: 2021-09-20 09:54:59
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -59,16 +59,6 @@ export default defineComponent({
     // 2.优化二：当用户点击重置
     const anForm = ref<InstanceType<typeof AnForm>>()
     const handleResetClick = () => {
-      // 这样修改是不能修改的，改不了浅拷贝出来的对象，得修改formDate内部的值
-      // formData.value = formOriginData;
-      // 比如这样:
-      // 方法一：
-      // for (const key in formOriginData) {
-      //   formData.value[`${key}`] = formOriginData[key];
-      // }
-      // 方法二：
-      // formData.value = formOriginData;
-      // 方法三：
       anForm.value?.formRef?.resetFields()
       emit('resetBtnClick')
     }

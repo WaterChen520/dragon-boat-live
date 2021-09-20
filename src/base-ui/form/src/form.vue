@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-05 16:59:30
- * @LastEditTime: 2021-09-13 14:42:54
+ * @LastEditTime: 2021-09-20 10:48:55
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -30,7 +30,22 @@
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
                   v-model="formData[`${item.field}`]"
-                />
+                >
+                </el-input>
+              </template>
+              <template v-if="item.type === 'inputAppend'">
+                <el-input
+                  :placeholder="item.placeholder"
+                  :show-password="item.type === 'password'"
+                  v-bind="item.otherOptions"
+                  v-model="formData[`${item.field}`]"
+                >
+                  <template #append>
+                    <slot name="append">
+                      <el-button icon="el-icon-search"></el-button>
+                    </slot>
+                  </template>
+                </el-input>
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
@@ -103,9 +118,6 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    // 进行浅拷贝，不直接使用v-model绑定props.modelValue的原因是为了不修改props的引用
-    // props.modelValue改变不会影响formData, 对象浅拷贝和数组浅拷贝有区别
-    // v-model="formData[`${item.field}`]"
     const formData = ref({ ...props.modelValue })
     const formRef = ref<InstanceType<typeof ElForm>>()
     watch(
@@ -118,18 +130,9 @@ export default defineComponent({
       }
     )
 
-    // 不使用v-model时，可以这样实现
-    // :model-value="modelValue[`${item.field}`]"
-    // @update:modelValue="handleValueChange($event, item.field)"
-
-    // const handleValueChange = (value: any, field: string) => {
-    //   emit("update:modelValue", { ...props.modelValue, [field]: value });
-    // };
-
     return {
       formRef,
       formData
-      // handleValueChange,
     }
   }
 })

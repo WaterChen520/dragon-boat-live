@@ -3,16 +3,18 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 12:58:50
- * @LastEditTime: 2021-09-14 14:19:56
+ * @LastEditTime: 2021-09-20 11:53:14
  * @LastEditors: 安知鱼
  */
 import anRequest from '../index'
 
-import { IAccount, ILoginResult } from './type'
+import { IAccount, IPhone, ILoginResult } from './type'
 import { IDataType } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',
+  PhoneLogin = '/phone',
+  getPhoneCode = 'getCode',
   LoginUserInfo = '/users/',
   UserMenus = '/role/'
 }
@@ -55,5 +57,35 @@ export function requestUserInfoById(id: number) {
 export function requestUserMenusById(id: number) {
   return anRequest.get<IDataType>({
     url: LoginAPI.UserMenus + id + '/menu'
+  })
+}
+
+/**
+ * @Description: 获取手机验证码请求
+ * @Author: 安知鱼
+ * @param  {*}
+ * @return {*}
+ * @param {IPhone} phone
+ */
+export function getPhoneCodeRequest(phone: string) {
+  return anRequest.post<IDataType>({
+    url: LoginAPI.getPhoneCode,
+    data: phone,
+    showLoading: true
+  })
+}
+
+/**
+ * @Description: 手机登录请求
+ * @Author: 安知鱼
+ * @param  {*}
+ * @return {*}
+ * @param {IPhone} phone
+ */
+export function phoneLoginRequest(phone: IPhone) {
+  return anRequest.post<IDataType<ILoginResult>>({
+    url: LoginAPI.PhoneLogin,
+    data: phone,
+    showLoading: true
   })
 }
