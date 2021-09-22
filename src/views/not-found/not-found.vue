@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-31 13:38:35
- * @LastEditTime: 2021-08-31 13:44:34
+ * @LastEditTime: 2021-09-22 14:59:28
  * @LastEditors: 安知鱼
 -->
 
@@ -11,7 +11,7 @@
   <div class="container">
     <h1 style="margin: 0">404</h1>
     <p>Oops! Something is wrong.</p>
-    <a class="button" href="#"
+    <a class="button" href="#" @click="goBack"
       ><i class="icon-home"></i> Go back in initial page, is better.</a
     >
   </div>

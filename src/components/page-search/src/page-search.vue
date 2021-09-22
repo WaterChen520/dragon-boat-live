@@ -3,16 +3,13 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-06 16:59:13
- * @LastEditTime: 2021-09-20 09:54:59
+ * @LastEditTime: 2021-09-22 15:28:07
  * @LastEditors: 安知鱼
 -->
 <template>
   <div class="page-search">
     <el-card shadow="hover">
       <AnForm v-bind="searchFormConfig" v-model="formData" ref="anForm">
-        <template #header>
-          <h2>高级检索</h2>
-        </template>
         <template #footer>
           <div class="handle-btns">
             <el-button

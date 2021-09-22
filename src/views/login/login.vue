@@ -9,7 +9,7 @@
     </div>
 
     <div class="forget-password" v-else>
-      <login-forget></login-forget>
+      <login-forget @resetPassword="ForgetClick"></login-forget>
     </div>
   </div>
 </template>

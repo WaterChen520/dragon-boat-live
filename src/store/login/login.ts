@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 10:27:31
- * @LastEditTime: 2021-09-20 17:12:24
+ * @LastEditTime: 2021-09-22 11:23:19
  * @LastEditors: 安知鱼
  */
 import { Module } from 'vuex'
@@ -17,10 +17,16 @@ import {
   phoneLoginRequest,
   getPhoneCodeRequest,
   requestUserInfoById,
-  requestUserMenusById
+  requestUserMenusById,
+  resetPasswordRequest
 } from '@/service/login/login'
 
-import { IAccount, IPhone, IRegister } from '@/service/login/type'
+import {
+  IAccount,
+  IPhone,
+  IRegister,
+  IResetPassword
+} from '@/service/login/type'
 import { ILoginState } from './type'
 import { IRootStore } from '../type'
 import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
@@ -76,8 +82,11 @@ const loginModule: Module<ILoginState, IRootStore> = {
       Cache.setCache('userInfo', userInfo)
 
       // 4.请求用户菜单
-      const userMenusResult = await requestUserMenusById(userInfo.role.id)
+      // const userMenusResult = await requestUserMenusById(userInfo.role.id)
+      // const userMenus = userMenusResult.data
+      const userMenusResult = require('@/data/userMenus.json')
       const userMenus = userMenusResult.data
+
       commit('changeUserMenus', userMenus)
       Cache.setCache('userMenus', userMenus)
 
@@ -132,6 +141,19 @@ const loginModule: Module<ILoginState, IRootStore> = {
         router.push('/login')
       } else {
         ElMessage.error('注册失败!')
+      }
+    },
+    async resetPassword(context, payload: IResetPassword) {
+      // 1. 实现重置逻辑
+      const resetPasswordResult = await resetPasswordRequest(payload)
+
+      if (resetPasswordResult.code === 200) {
+        ElMessage.success('重置密码成功！')
+        // 2. 跳转登录页
+        window.location.href = './'
+      } else {
+        ElMessage.error('重置密码失败!')
+        return
       }
     },
     loadLocalLogin({ commit, dispatch }) {

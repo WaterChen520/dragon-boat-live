@@ -3,22 +3,26 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 17:20:29
- * @LastEditTime: 2021-09-06 12:08:46
+ * @LastEditTime: 2021-09-22 15:25:28
  * @LastEditors: 安知鱼
 -->
 <template>
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span v-if="!collapse" class="title">Vue3+TS</span>
+      <span v-if="!collapse" class="title">
+        <div class="text_1">直播数据管理</div>
+        <div class="text_2">management system</div>
+      </span>
     </div>
     <el-menu
       :default-active="defaultValue"
       class="el-menu-vertical"
+      :collapse-transition="false"
       :collapse="collapse"
-      background-color="#0c2135"
-      text-color="#b7bdc3"
-      active-text-color="#0a60bd"
+      background-color="#fff"
+      text-color="#666666"
+      active-text-color="#CE2513"
     >
       <template v-for="item in userMenus" :key="item.id + ''">
         <!-- 二级菜单 -->
@@ -106,12 +110,12 @@ export default defineComponent({
 <style scoped lang="less">
 .nav-menu {
   height: 100%;
-  background-color: #001529;
+  background-color: #ce2513;
 
   .logo {
     display: flex;
-    height: 28px;
-    padding: 12px 10px 8px 10px;
+    height: 44px;
+    padding: 12px 10px 8px 0px;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
@@ -122,9 +126,25 @@ export default defineComponent({
     }
 
     .title {
-      font-size: 16px;
-      font-weight: 700;
       color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+      .text_1 {
+        // font-size: 16px;
+        // font-weight: 700;
+        height: 30px;
+        line-height: 30px;
+      }
+      .text_2 {
+        font-size: 12px;
+        height: 15px;
+        line-height: 15px;
+        color: #eba8a1;
+        overflow: hidden;
+      }
     }
   }
 
@@ -134,26 +154,25 @@ export default defineComponent({
 
   // 目录
   .el-sub-menu {
-    background-color: #001529 !important;
+    background-color: #fff !important;
     // 二级菜单 ( 默认背景 )
     .el-menu-item {
       padding-left: 50px !important;
-      background-color: #0c2135 !important;
+      background-color: #fff !important;
     }
   }
 
   :deep(.el-sub-menu__title) {
-    background-color: #001529 !important;
+    background-color: #fff !important;
   }
 
   // hover 高亮
   .el-menu-item:hover {
-    color: #fff !important; // 菜单
+    color: #ce2513 !important; // 菜单
   }
 
   .el-menu-item.is-active {
-    color: #fff !important;
-    background-color: #0a60bd !important;
+    background-color: #ffefed !important;
   }
 }
 

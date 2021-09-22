@@ -3,13 +3,13 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-28 11:45:26
- * @LastEditTime: 2021-09-18 14:19:10
+ * @LastEditTime: 2021-09-22 15:26:53
  * @LastEditors: 安知鱼
 -->
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside :width="isCollapse ? '60px' : '210px'">
+      <el-aside :width="isCollapse ? '64px' : '210px'">
         <nav-menu :collapse="isCollapse" />
       </el-aside>
       <el-container class="page">
@@ -82,7 +82,7 @@ export default defineComponent({
 }
 
 .el-header {
-  height: 48px !important;
+  height: 64px !important;
 }
 
 .el-aside {
@@ -91,10 +91,12 @@ export default defineComponent({
   line-height: 200px;
   text-align: left;
   cursor: pointer;
-  background-color: #001529;
+  background-color: #fff;
   transition: width 0.3s linear;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
+  transition: 0.5s;
+  user-select: none;
 
   &::-webkit-scrollbar {
     display: none;

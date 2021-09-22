@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-18 16:49:27
- * @LastEditTime: 2021-09-20 12:45:04
+ * @LastEditTime: 2021-09-22 09:37:37
  * @LastEditors: 安知鱼
  */
 
@@ -41,8 +41,9 @@ export const accountConfig: IForm = {
           trigger: 'blur'
         },
         {
-          pattern: /^[a-z0-9]{3,}$/,
-          message: '用户名必须是3位以上的字母或者数字~',
+          min: 6,
+          max: 20,
+          message: '长度在 6 到 20 个字符',
           trigger: 'blur'
         }
       ],

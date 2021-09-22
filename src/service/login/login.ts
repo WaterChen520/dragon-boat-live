@@ -3,20 +3,21 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 12:58:50
- * @LastEditTime: 2021-09-20 11:53:14
+ * @LastEditTime: 2021-09-22 10:49:59
  * @LastEditors: 安知鱼
  */
 import anRequest from '../index'
 
-import { IAccount, IPhone, ILoginResult } from './type'
+import { IAccount, IPhone, ILoginResult, IResetPassword } from './type'
 import { IDataType } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',
   PhoneLogin = '/phone',
-  getPhoneCode = 'getCode',
+  GetPhoneCode = 'getCode',
   LoginUserInfo = '/users/',
-  UserMenus = '/role/'
+  UserMenus = '/role/',
+  ResetPassword = '/ResetPassword'
 }
 
 /**
@@ -69,7 +70,7 @@ export function requestUserMenusById(id: number) {
  */
 export function getPhoneCodeRequest(phone: string) {
   return anRequest.post<IDataType>({
-    url: LoginAPI.getPhoneCode,
+    url: LoginAPI.GetPhoneCode,
     data: phone,
     showLoading: true
   })
@@ -83,6 +84,21 @@ export function getPhoneCodeRequest(phone: string) {
  * @param {IPhone} phone
  */
 export function phoneLoginRequest(phone: IPhone) {
+  return anRequest.post<IDataType<ILoginResult>>({
+    url: LoginAPI.PhoneLogin,
+    data: phone,
+    showLoading: true
+  })
+}
+
+/**
+ * @Description: 重置密码请求
+ * @Author: 安知鱼
+ * @param  {*}
+ * @return {*}
+ * @param {IPhone} phone
+ */
+export function resetPasswordRequest(phone: IResetPassword) {
   return anRequest.post<IDataType<ILoginResult>>({
     url: LoginAPI.PhoneLogin,
     data: phone,
