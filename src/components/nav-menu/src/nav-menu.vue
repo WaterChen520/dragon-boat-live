@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 17:20:29
- * @LastEditTime: 2021-09-22 15:25:28
+ * @LastEditTime: 2021-09-23 16:50:30
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -18,7 +18,6 @@
     <el-menu
       :default-active="defaultValue"
       class="el-menu-vertical"
-      :collapse-transition="false"
       :collapse="collapse"
       background-color="#fff"
       text-color="#666666"
@@ -87,6 +86,7 @@ export default defineComponent({
 
     // data
     const menu = pathMapToMenu(userMenus.value, currentPath)
+
     const defaultValue = ref(menu.id + '')
 
     // event handle
@@ -110,7 +110,7 @@ export default defineComponent({
 <style scoped lang="less">
 .nav-menu {
   height: 100%;
-  background-color: #ce2513;
+  // background-color: #ce2513;
 
   .logo {
     display: flex;
@@ -119,6 +119,7 @@ export default defineComponent({
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    background-color: #ce2513;
 
     .img {
       height: 100%;
@@ -178,6 +179,6 @@ export default defineComponent({
 
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 100%;
-  height: calc(100% - 48px);
+  // height: calc(100% - 48px);
 }
 </style>

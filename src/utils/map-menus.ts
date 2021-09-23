@@ -3,12 +3,13 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-01 08:33:41
- * @LastEditTime: 2021-09-14 13:31:14
+ * @LastEditTime: 2021-09-23 17:01:38
  * @LastEditors: 安知鱼
  */
 
 import { IBreadcrumb } from '@/base-ui/breadcrumb'
 import { RouteRecordRaw } from 'vue-router'
+import Cache from '@/utils/cache'
 
 let firstMenu: any = null
 
@@ -53,6 +54,10 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         // 保存第一个路由，方便首页重定向至第一个路由，防止侧边栏找不到id
         if (!firstMenu) {
           firstMenu = menu
+          const password = allRoutes.find(
+            (route) => route.path === '/main/password'
+          )
+          if (password) routes.push(password)
         }
       } else {
         _recurseGetRoute(menu.children)
@@ -92,6 +97,12 @@ export function pathMapToMenu(
   currentPath: string,
   breadcrumbs?: IBreadcrumb[]
 ): any {
+  if (currentPath === '/main/password') {
+    breadcrumbs?.push({
+      name: '修改密码'
+    })
+    return Cache.getCache('menu')
+  }
   for (const menu of userMenus) {
     if (menu.type === 1) {
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
@@ -103,6 +114,7 @@ export function pathMapToMenu(
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
       breadcrumbs?.push({ name: menu.name, path: menu.url })
+      Cache.setCache('menu', menu)
       return menu
     }
   }

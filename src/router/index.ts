@@ -16,20 +16,20 @@ const routes: Array<RouteRecordRaw> = [
     path: '/main',
     name: 'main',
     component: () => import('@/views/main/main.vue')
-  },
-  // 找不到页面
-  {
-    path: '/404',
-    name: 'notFound',
-    meta: {
-      title: '找不到页面'
-    },
-    component: () => import('@/views/not-found/not-found.vue')
-  },
-  {
-    path: '/:pathMatch(.*)',
-    redirect: '/404'
   }
+  // 找不到页面
+  // {
+  //   path: '/404',
+  //   name: 'notFound',
+  //   meta: {
+  //     title: '找不到页面'
+  //   },
+  //   component: () => import('@/views/not-found/not-found.vue')
+  // },
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   redirect: '/404'
+  // }
 ]
 
 const router = createRouter({

@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-28 11:45:26
- * @LastEditTime: 2021-09-22 15:26:53
+ * @LastEditTime: 2021-09-22 16:00:58
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -17,9 +17,13 @@
           <nav-header @foldChange="handleFoldChange" />
         </el-header>
         <el-main class="page-content">
-          <!-- <div class="page-info"> -->
-          <router-view></router-view>
-          <!-- </div> -->
+          <router-view v-slot="{ Component }">
+            <transition name="router-fade" mode="out-in">
+              <keep-alive>
+                <component :is="Component" />
+              </keep-alive>
+            </transition>
+          </router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -95,7 +99,6 @@ export default defineComponent({
   transition: width 0.3s linear;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
-  transition: 0.5s;
   user-select: none;
 
   &::-webkit-scrollbar {
@@ -107,5 +110,15 @@ export default defineComponent({
   color: #333;
   text-align: center;
   background-color: #f0f2f5;
+}
+
+.router-fade-enter-active,
+.router-fade-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.router-fade-enter-from,
+.router-fade-leave-to {
+  opacity: 0;
 }
 </style>

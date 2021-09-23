@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 12:58:50
- * @LastEditTime: 2021-09-22 10:49:59
+ * @LastEditTime: 2021-09-23 12:32:57
  * @LastEditors: 安知鱼
  */
 import anRequest from '../index'
@@ -101,7 +101,6 @@ export function phoneLoginRequest(phone: IPhone) {
 export function resetPasswordRequest(phone: IResetPassword) {
   return anRequest.post<IDataType<ILoginResult>>({
     url: LoginAPI.PhoneLogin,
-    data: phone,
-    showLoading: true
+    data: phone
   })
 }
