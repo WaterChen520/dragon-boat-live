@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-08-30 10:27:31
- * @LastEditTime: 2021-09-23 16:12:00
+ * @LastEditTime: 2021-09-27 19:28:05
  * @LastEditors: 安知鱼
  */
 import { Module } from 'vuex'
@@ -36,19 +36,14 @@ const loginModule: Module<ILoginState, IRootStore> = {
   state() {
     return {
       token: '',
-      userInfo: {},
       userMenus: [],
       permissions: [],
       code: ''
     }
   },
-  getters: {},
   mutations: {
     changeToken(state, token: string) {
       state.token = token
-    },
-    changeUserInfo(state, userInfo: any) {
-      state.userInfo = userInfo
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
@@ -78,7 +73,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 3.请求用户信息
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
-      commit('changeUserInfo', userInfo)
+      commit('account/changeUserInfo', userInfo, { root: true })
       Cache.setCache('userInfo', userInfo)
 
       // 4.请求用户菜单
@@ -107,7 +102,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       const loginResult = await phoneLoginRequest(payload)
       if (loginResult.code === 200) {
         const { id, token } = loginResult.data
-        commit('changeToken', token)
+        commit('account/changeUserInfo', token)
         Cache.setCache('token', token)
 
         // 2. 发送初始化的请求
@@ -116,7 +111,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
         // 3.请求用户信息
         const userInfoResult = await requestUserInfoById(id)
         const userInfo = userInfoResult.data
-        commit('changeUserInfo', userInfo)
+        commit('changeUserInfo', userInfo, { root: true })
         Cache.setCache('userInfo', userInfo)
 
         // 4.请求用户菜单
@@ -164,7 +159,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       }
       const userInfo = Cache.getCache('userInfo')
       if (userInfo) {
-        commit('changeUserInfo', userInfo)
+        commit('account/changeUserInfo', userInfo, { root: true })
       }
       const userMenus = Cache.getCache('userMenus')
       if (userMenus) {

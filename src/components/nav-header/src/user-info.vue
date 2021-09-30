@@ -24,16 +24,18 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import cache from '@/utils/cache'
+import { useStore } from '@/store'
 import { useRouter } from 'vue-router'
 
+import cache from '@/utils/cache'
 import { defaultAvatar } from '../config/header.config'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
     const router = useRouter()
-    const name = computed(() => cache.getCache('userInfo').name)
-    const avatarUrl = computed(() => cache.getCache('userInfo').avatarUrl)
+    const name = computed(() => store.state.account.userInfo.name)
+    const avatarUrl = computed(() => store.state.account.userInfo.avatarUrl)
 
     const handleExitClick = () => {
       cache.clearCache()

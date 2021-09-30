@@ -49,11 +49,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from '@/store'
 
 import Avatar from '@/components/user-avatar'
-import Cache from '@/utils/cache'
 
 export default defineComponent({
   components: {
@@ -62,11 +61,12 @@ export default defineComponent({
   name: 'account',
   setup() {
     const store = useStore()
-    const defaultForm = reactive({
-      userName: Cache.getCache('userInfo').name ?? '安知鱼',
-      phone: Cache.getCache('userInfo').cellphone ?? '18511111111'
+    const defaultForm = ref({
+      userName: computed(() => store.state.account.userInfo.name ?? '安知鱼'),
+      phone: computed(() => store.state.account.userInfo.phone ?? '18511111111')
     })
-    const form = ref({ ...defaultForm })
+
+    const form = ref({ ...defaultForm.value })
     const editModalRef = ref(null)
     const dialogFormVisible = ref(false)
 

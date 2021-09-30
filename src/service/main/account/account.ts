@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-23 12:30:36
- * @LastEditTime: 2021-09-23 17:29:03
+ * @LastEditTime: 2021-09-27 19:36:57
  * @LastEditors: 安知鱼
  */
 
@@ -17,14 +17,14 @@ enum AccountAPI {
 }
 
 /**
- * @Description: 上传头像
+ * @Description: 修改头像
  * @Author: 安知鱼
  * @param  {*}
  * @return {*}
  * @param {string} url
  * @param {any} queryInfo
  */
-export function getAvatarUrl(url: string, formData: FormData) {
+export function changeAvatar(url: string, formData: FormData) {
   return anRequest.post<IDataType>({
     url: url,
     data: formData,

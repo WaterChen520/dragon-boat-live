@@ -149,7 +149,7 @@ export default defineComponent({
       }
       formData.append(filename, result.cropFile)
       // console.log(formData.get(filename))
-      store.dispatch('account/getAvatarUrlAction', {
+      store.dispatch('account/changeAvatarAction', {
         url: action,
         formData: formData
       })
