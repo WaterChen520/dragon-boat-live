@@ -43,7 +43,7 @@ import { contentTableConfig } from './config/content.config'
 import { searchFormConfig } from './config/search.config'
 import { modalConfig } from './config/modal.config'
 
-import { usePageModal } from '@/hooks/use-page-modal'
+import { usePageModal } from '@/hooks'
 
 export default defineComponent({
   name: 'role',

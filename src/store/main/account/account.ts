@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-23 12:37:42
- * @LastEditTime: 2021-09-27 21:24:39
+ * @LastEditTime: 2021-09-30 16:55:45
  * @LastEditors: 安知鱼
  */
 import { Module } from 'vuex'
@@ -15,7 +15,7 @@ import {
   changePassword
 } from '@/service/main/account/account'
 
-import useLocalStorage from '@/hooks/use-local-storage'
+import { useLocalStorage } from '@/hooks'
 import { ElMessage } from 'element-plus'
 
 const accountModule: Module<IAccountState, IRootStore> = {
@@ -40,7 +40,6 @@ const accountModule: Module<IAccountState, IRootStore> = {
       if (changeAvatarResult.code === 200) {
         const userInfo = useLocalStorage('userInfo')
         userInfo.value = changeAvatarResult.data
-        console.log(userInfo.value)
 
         commit('changeUserInfo', userInfo)
 
@@ -55,7 +54,6 @@ const accountModule: Module<IAccountState, IRootStore> = {
       if (changeUserNameResult.code === 200) {
         const userInfo = useLocalStorage('userInfo')
         userInfo.value = changeUserNameResult.data
-        console.log(userInfo.value)
 
         commit('changeUserInfo', userInfo)
 
@@ -64,14 +62,16 @@ const accountModule: Module<IAccountState, IRootStore> = {
         ElMessage.error('修改用户名失败！')
       }
     },
-    async changePassword(context, payload: IPasswordForm) {
-      const changePasswordResult = await changePassword(payload)
-      console.log(changePasswordResult)
-      if (changePasswordResult.code === 200) {
-        ElMessage.success('修改密码成功！')
-      } else {
-        ElMessage.error('修改密码失败！')
-      }
+    changePassword(context, payload: IPasswordForm) {
+      return new Promise((resolve, reject) => {
+        changePassword(payload)
+          .then((res) => {
+            resolve(res)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   }
 }

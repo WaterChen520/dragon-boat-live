@@ -19,11 +19,15 @@ module.exports = {
         },
         changeOrigin: true
       }
-    }
+    },
+    open: true
   },
   chainWebpack: (config) => {
     config.resolve.alias
       .set('@', path.resolve(__dirname, 'src'))
       .set('components', '@/components')
+      .set('assets', '@/assets')
+      .set('service', '@/service')
+      .set('views', '@/views')
   }
 }

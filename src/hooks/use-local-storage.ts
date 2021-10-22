@@ -3,14 +3,14 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-27 17:46:39
- * @LastEditTime: 2021-09-27 17:53:52
+ * @LastEditTime: 2021-09-30 16:04:08
  * @LastEditors: 安知鱼
  */
 
 import { ref, watch } from 'vue'
 import cache from '@/utils/cache'
 
-export default function (key: string, value?: any) {
+export function useLocalStorage(key: string, value?: any) {
   const data = ref(value)
 
   if (value) {

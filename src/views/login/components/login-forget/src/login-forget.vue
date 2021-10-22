@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-20 17:27:59
- * @LastEditTime: 2021-09-23 17:20:57
+ * @LastEditTime: 2021-09-30 17:13:52
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -50,9 +50,11 @@ import { useStore } from 'vuex'
 
 import AnForm from '@/base-ui/form'
 
-import { useCaptcha } from '../../../hooks/use-captcha'
 import { forgetConfig } from '../config/forget-config'
-type CallbackFn = (error?: any) => void
+
+import { useCaptcha } from '@/views/login/hooks/use-captcha'
+import { useVerifyPassword } from '@/hooks'
+
 export default defineComponent({
   components: {
     AnForm
@@ -68,28 +70,8 @@ export default defineComponent({
     }
     const formData = ref(formOriginData)
 
-    // 处理二次输入密码验证规则
-    const verifyPasswordValidator = (
-      rule: any[],
-      value: any,
-      callback: CallbackFn
-    ) => {
-      if (value === '') {
-        callback(new Error('请再次输入您的密码'))
-      } else if (value !== formData.value['newPassword']) {
-        callback(new Error('两次输入密码不一致!'))
-      } else {
-        callback()
-      }
-    }
-    const verifyPasswordRule = {
-      validator: verifyPasswordValidator,
-      trigger: 'blur'
-    }
-    const verifyPasswordItem = forgetConfig.formItems.find(
-      (item) => item.field === 'verifyPassword'
-    )
-    verifyPasswordItem?.rules?.push(verifyPasswordRule)
+    // 处理二次输入密码验证
+    useVerifyPassword(formData, forgetConfig)
 
     // 处理验证码
     const anFormRef = ref<InstanceType<typeof AnForm>>()

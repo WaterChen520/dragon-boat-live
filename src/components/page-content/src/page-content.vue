@@ -3,7 +3,7 @@
  * @Author: 安知鱼
  * @Email: 2268025923@qq.com
  * @Date: 2021-09-10 15:08:23
- * @LastEditTime: 2021-09-16 17:25:27
+ * @LastEditTime: 2021-09-30 16:08:47
  * @LastEditors: 安知鱼
 -->
 <template>
@@ -86,7 +86,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, watch, reactive } from 'vue'
 import { useStore } from '@/store'
-import { usePermission } from '@/hooks/use-permissions'
+import { usePermission } from '@/hooks'
 
 import { ElMessage } from 'element-plus'
 import { ElMessageBox } from 'element-plus'

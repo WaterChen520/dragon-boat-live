@@ -9,11 +9,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'login',
+    meta: {
+      title: '登录'
+    },
     component: () => import('@/views/login/login.vue')
   },
   {
     path: '/main',
     name: 'main',
+    meta: {
+      title: '主界面'
+    },
     component: () => import('@/views/main/main.vue')
   },
   // 找不到页面
