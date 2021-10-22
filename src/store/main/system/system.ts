@@ -69,8 +69,16 @@ const systemModule: Module<ISystemState, IRootStore> = {
       const pageName = payload.pageName
       const pageUrl = `${pageName}/list`
 
-      // 2.对页面发送请求
-      const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+      // 2.对页面发送请求(记得将此处修改为请求)
+      // const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+      let pageResult
+      if (pageUrl === 'menu/list') {
+        pageResult = await require('@/data/menuList.json')
+      } else if (pageUrl === 'role/list') {
+        pageResult = await require('@/data/roleList.json')
+      } else if (pageUrl === 'users/list') {
+        pageResult = await require('@/data/pageUserList.json')
+      }
       console.log(pageResult)
 
       // 3.将数据存储到state中

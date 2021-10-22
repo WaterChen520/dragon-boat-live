@@ -39,18 +39,23 @@ const store = createStore<IRootStore>({
   },
   actions: {
     async getInitialDataAction({ commit }) {
-      // 1.请求部门和角色数据
-      const departmentResult = await getPageListData('/department/list', {
-        offset: 0,
-        size: 1000
-      })
+      // 1.请求全部部门数据(记得将此处修改为请求)
+      // const departmentResult = await getPageListData('/department/list', {
+      //   offset: 0,
+      //   size: 1000
+      // })
+      const departmentResult = await require('@/data/departmentList.json')
       const { list: departmentList } = departmentResult.data
-      const roleResult = await getPageListData('/role/list', {
-        offset: 0,
-        size: 1000
-      })
+      // 2.请求全部角色数据(记得将此处修改为请求)
+      // const roleResult = await getPageListData('/role/list', {
+      //   offset: 0,
+      //   size: 1000
+      // })
+      const roleResult = await require('@/data/roleList.json')
       const { list: roleList } = roleResult.data
-      const menuResult = await getPageListData('/menu/list', {})
+      // 3.请求全部菜单数据(记得将此处修改为请求)
+      // const menuResult = await getPageListData('/menu/list', {})
+      const menuResult = await require('@/data/menuList.json')
       const { list: menuList } = menuResult.data
 
       // 2.保存数据

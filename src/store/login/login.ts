@@ -61,8 +61,9 @@ const loginModule: Module<ILoginState, IRootStore> = {
   },
   actions: {
     async accountLoginAction({ commit, dispatch }, payload: IAccount) {
-      // 1. 实现账号密码登录逻辑
-      const loginResult = await accountLoginRequest(payload)
+      // 1. 实现账号密码登录逻辑(记得将此处修改为请求)
+      // const loginResult = await accountLoginRequest(payload)
+      const loginResult = await require('@/data/login.json')
       const { id, token } = loginResult.data
       commit('changeToken', token)
       Cache.setCache('token', token)
@@ -70,16 +71,16 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 2. 发送初始化的请求
       dispatch('getInitialDataAction', null, { root: true })
 
-      // 3.请求用户信息
-      const userInfoResult = await requestUserInfoById(id)
+      // 3.请求用户信息(记得将此处修改为请求)
+      // const userInfoResult = await requestUserInfoById(id)
+      const userInfoResult = await require('@/data/userInfo.json')
       const userInfo = userInfoResult.data
       commit('account/changeUserInfo', userInfo, { root: true })
       Cache.setCache('userInfo', userInfo)
 
-      // 4.请求用户菜单
+      // 4.请求用户菜单(记得将此处修改为请求)
       // const userMenusResult = await requestUserMenusById(userInfo.role.id)
-      // const userMenus = userMenusResult.data
-      const userMenusResult = require('@/data/userMenus.json')
+      const userMenusResult = await require('@/data/userMenus.json')
       const userMenus = userMenusResult.data
 
       commit('changeUserMenus', userMenus)

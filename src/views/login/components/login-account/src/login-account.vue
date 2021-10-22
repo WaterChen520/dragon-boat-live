@@ -32,7 +32,7 @@ export default defineComponent({
     const formData = ref<any>({})
 
     const defaultInfo: any = reactive({
-      name: cache.getCache('name') ?? 'coderwhy',
+      name: cache.getCache('name') ?? 'anzhiyu',
       password: cache.getCache('password') ?? '123456'
     })
 
