@@ -1,6 +1,6 @@
 import { createStore, Store, useStore as useVuexStore } from 'vuex'
 
-import { getPageListData } from '@/service/main/system/system'
+// import { getPageListData } from '@/service/main/system/system'
 
 import { IRootStore, IStoreType } from './type'
 
